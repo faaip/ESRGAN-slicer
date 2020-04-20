@@ -7,7 +7,11 @@ A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a lim
 - [ ] Distribute
 
 ### Installing and running the CLI:
-Install dependencies from *requirements.txt* using **pip**. No
+Install dependencies from *requirements.txt* using **pip**.
+```
+pip3 install -r requirements.txt
+
+```
 
 Run the script as so:
 
