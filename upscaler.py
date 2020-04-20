@@ -1,6 +1,6 @@
 import os.path as osp
 import os
-from argparse import ArgumentParser
+import argparse
 import sys
 import glob
 import cv2
@@ -49,7 +49,21 @@ def file_is_valid(file):
     else:
         return open(file, 'r')  # return an open file handle
 
-def upscale_file(file_path):
+def upscale_file(file_path, output_path):
     img = cv2.imread(file_path, cv2.IMREAD_COLOR)
     out = slice(img)
-    cv2.imwrite('out.png', out)
+    cv2.imwrite(output_path, out)
+
+
+parser = argparse.ArgumentParser(description='Upscale input file')
+
+#add the argument
+parser.add_argument('-i', '--input', dest='infile',   required=True,
+                metavar='INPUT_FILE', help='The image to be upscaled')
+parser.add_argument('-o', '--output', dest='outfile',  required=True,
+                metavar='OUTPUT_FILE', help='The upscaled image')
+
+#parse and assign to the variable
+args = parser.parse_args()
+infile=args.infile
+upscale_file(args.infile, args.outfile)
