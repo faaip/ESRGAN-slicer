@@ -6,8 +6,6 @@ A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a lim
 - [ ] GUI
 - [ ] Distribute
 
-Download  
-
 ### Installing and running the CLI:
 Install dependencies from *requirements.txt* using **pip**. No
 
