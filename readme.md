@@ -23,4 +23,9 @@ python3 upscaler.py -i input.png -o output.png
 
 ```
 
+it can also upscale contents of directories:
+```
+python3 upscaler.py -i input_dir -o output_dir
+```
+
 When the scripts run for the first time, it will download the **RRDB_ESRGAN_x4.pth**-model from [Google Drive](https://drive.google.com/drive/u/0/folders/17VYV_SoZZesU6mbxz2dMAIccSSlqLecY) and place the model in `./models`.
