@@ -12,8 +12,13 @@ import tkinter as tk
 from tkinter import filedialog
 from gdown import download
 
-model_path = 'models/RRDB_ESRGAN_x4.pth'  # models/RRDB_ESRGAN_x4.pth OR models/RRDB_PSNR_x4.pth
-device = torch.device('cuda')  # if you want to run on CPU, change 'cuda' -> cpu
+model_path = 'models/RRDB_ESRGAN_x4.pth'
+if torch.cuda.is_available():
+    print('Yay, CUDA is available!')
+    device = torch.device('cuda')
+else:
+    print('No CUDA detected, running on CPU.')
+    device = torch.device('cpu') 
 
 model = arch.RRDBNet(3, 3, 64, 23, gc=32)
 try:
@@ -41,7 +46,6 @@ def upscale(img):
 
 
 def slice(img, slice_size=600):
-    print('Slicing image...')
     out_img = np.zeros([img.shape[0]*4, img.shape[1]*4, img.shape[2]])
     print(range(0,img.shape[0],slice_size))
     for r in tqdm(range(0, img.shape[0], slice_size)):
