@@ -1,5 +1,5 @@
 # ESRGAN Slicer
-A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). Takes larger images, slices, upscales and then stitches back together.
+A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a limit to the size of pictures you can upscale. This script takes larger images, slices, upscales and then stitches back together. 
 
 ## TODO:
 - [x] CLI
@@ -15,6 +15,6 @@ Install dependencies from *requirements.txt* using **pip**.
 Run the script as so:
 
 ```
-python3 upscaler -i input.png -o output.png
+python3 upscaler.py -i input.png -o output.png
 
 ```
