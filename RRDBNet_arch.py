@@ -1,3 +1,6 @@
+"""
+From https://github.com/xinntao/ESRGAN/
+"""
 import functools
 import torch
 import torch.nn as nn
