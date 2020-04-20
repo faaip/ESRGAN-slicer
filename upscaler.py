@@ -10,12 +10,20 @@ from tqdm import tqdm
 import RRDBNet_arch as arch
 import tkinter as tk
 from tkinter import filedialog
+from gdown import download
 
 model_path = 'models/RRDB_ESRGAN_x4.pth'  # models/RRDB_ESRGAN_x4.pth OR models/RRDB_PSNR_x4.pth
 device = torch.device('cuda')  # if you want to run on CPU, change 'cuda' -> cpu
 
 model = arch.RRDBNet(3, 3, 64, 23, gc=32)
-model.load_state_dict(torch.load(model_path), strict=True)
+try:
+    model.load_state_dict(torch.load(model_path), strict=True)
+except FileNotFoundError as e:
+    print('Model not found, downloading:')
+    cmd = 'gdown https://drive.google.com/uc?id=1TPrz5QKd8DHHt1k8SRtm6tMiPjz_Qene -O ./models/RRDB_ESRGAN_x4.pth'
+    os.system(cmd)
+    print('Model downloaded')
+
 model.eval()
 model = model.to(device)
 
