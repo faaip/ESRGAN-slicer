@@ -3,6 +3,7 @@ A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a lim
 
 ## TODO:
 - [x] CLI
+- [ ] Take directories as input
 - [ ] GUI
 - [ ] Distribute
 
