@@ -3,6 +3,8 @@ A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a lim
 
 ## TODO:
 - [x] CLI
+- [ ] Can run with CPU only
+- [ ] More progress (TQDM)
 - [ ] Take directories as input
 - [ ] GUI
 - [ ] Distribute
