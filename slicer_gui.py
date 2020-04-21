@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog, messagebox
-from upscaler import upscale_file, upscale_directory
+from upscaler import upscale_file, upscale_directory, cuda_is_available
 
 
 class Root(Tk):
@@ -25,6 +25,9 @@ class Root(Tk):
 
         self.selectionLabel = ttk.Label(self.inputFrame, text="")
         self.selectionLabel.grid(column=1, row=3)
+
+        if not cuda_is_available():
+            messagebox.showwarning(message='No CUDA detected. Note that running ESRGAN on CPU can be rather time consuming.')
 
         self.goButton = self.goButton()
 
@@ -81,7 +84,7 @@ class Root(Tk):
             upscale_directory(self.input_path, self.output_path)
 
     def fileDialog(self):
-        path = filedialog.askopenfilename(title='Select input file...', initialdir="/home/fablab-ubuntu", title="Select A File",
+        path = filedialog.askopenfilename(title='Select input file...', initialdir="/home/fablab-ubuntu", 
                                           filetypes=(("JPEG", "*.jpg *.jpeg"), ("PNG", "*.png")))
         self.readyToUpscale(path)
 

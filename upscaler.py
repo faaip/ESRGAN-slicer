@@ -32,6 +32,8 @@ except FileNotFoundError as e:
 model.eval()
 model = model.to(device)
 
+def cuda_is_available():
+    return torch.cuda.is_available()
 
 def upscale(img):
     img = img * 1.0 / 255
