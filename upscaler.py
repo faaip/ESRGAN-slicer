@@ -50,21 +50,13 @@ def upscale(img):
 
 def slice(img, slice_size=600):
     out_img = np.zeros([img.shape[0]*4, img.shape[1]*4, img.shape[2]])
-    print(range(0, img.shape[0], slice_size))
     for r in tqdm(range(0, img.shape[0], slice_size)):
         for c in range(0, img.shape[1], slice_size):
             upscaled_img = upscale(img[r:r+slice_size, c:c+slice_size, :])
             out_img[r*4:r*4+upscaled_img.shape[0], c*4:c *
                     4+upscaled_img.shape[1], :] = upscaled_img
-    print('Upscaled sliced stitched together, done!')
     return out_img
 
-
-def file_is_valid(file):
-    if not os.path.exists(file):
-        parser.error("The file %s does not exist!" % file)
-    else:
-        return open(file, 'r')  # return an open file handle
 
 
 def upscale_file(file_path, output_path):
@@ -83,6 +75,7 @@ def isImage(file):
 
 def upscale_directory(input_dir, output_dir):
     print('Upscaling all files in', input_dir)
+    os.mkdir(output_dir) 
     for file in tqdm(list(filter(lambda x: isImage, os.listdir(input_dir)))):
         filename = os.fsdecode(file)
         if filename.endswith(".png") or filename.endswith(".jpeg"):
@@ -116,4 +109,5 @@ parser.add_argument('-i', '--input', dest='infile',   required=True,
 parser.add_argument('-o', '--output', dest='outfile',  required=True,
                     metavar='OUTPUT_FILE', help='The upscaled image or output directory')
 
-process_input_args()
+if __name__ == "__main__":
+    process_input_args()
