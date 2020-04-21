@@ -69,10 +69,10 @@ class Root(Tk):
             self.goButton.config(state='normal')
         elif os.path.isdir(self.input_path):
             self.output_path = filedialog.askdirectory(title='Select output directory',initialdir=os.path.dirname(self.input_path))
-            if os.path.samefile(str(self.input_path), str(self.output_path)):
-                messagebox.showwarning("Warning", "Output directory cannot be the same as input")
-            else:
-                self.goButton.config(state='normal')
+            if os.path.isdir(self.output_path):
+                if os.path.samefile(str(self.input_path), str(self.output_path)):
+                    messagebox.showwarning("Warning", "Output directory cannot be the same as input")
+            self.goButton.config(state='normal')
 
     def runUpscaling(self):
         if os.path.isfile(self.input_path):
