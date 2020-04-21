@@ -82,7 +82,7 @@ def isImage(file):
 
 
 def upscale_directory(input_dir, output_dir):
-    print('Upscaling all files in directory')
+    print('Upscaling all files in', input_dir)
     for file in tqdm(list(filter(lambda x: isImage, os.listdir(input_dir)))):
         filename = os.fsdecode(file)
         if filename.endswith(".png") or filename.endswith(".jpeg"):
@@ -96,9 +96,15 @@ def process_input_args():
     infile = args.infile
     outfile = args.outfile
     if os.path.isfile(infile):
-        print('input is image')
-        upscale_file(infile, outfile)
+        if isImage(outfile):
+            upscale_file(infile, outfile)
+        else:
+            raise IOError(
+                'Output has to be an image, when input is a single image.')
     elif os.path.isdir(infile):
+        if os.path.isfile(outfile) or isImage(outfile):
+            raise IOError(
+                'Output file cannot be an image, when input is a dir')
         upscale_directory(infile, outfile)
 
 
