@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog, messagebox
-from upscaler import file_is_valid, upscale_file
+from upscaler import upscale_file
 
 # try:
 #     from upscaler import file_is_valid
@@ -56,10 +56,7 @@ class Root(Tk):
         self.goButton.config(state='normal')
 
     def runUpscaling(self):
-        if file_is_valid(self.imagePath):
-            upscale_file(self.imagePath)
-        else:
-            print(':8')
+        upscale_file(self.imagePath)
 
 
     def fileDialog(self):
