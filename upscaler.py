@@ -68,9 +68,12 @@ def file_is_valid(file):
 
 
 def upscale_file(file_path, output_path):
-    img = cv2.imread(file_path, cv2.IMREAD_COLOR)
-    out = slice(img)
-    cv2.imwrite(output_path, out)
+    if isImage(file_path):
+        img = cv2.imread(file_path, cv2.IMREAD_COLOR)
+        out = slice(img)
+        cv2.imwrite(output_path, out)
+    else:
+        raise IOError('Input file is', os.fsdecode(file_path),', can only take PNG og JPEG') 
 
 
 def isImage(file):
@@ -105,10 +108,6 @@ if os.path.isdir(infile):
         os.path.file(outfile)
     except AttributeError as e:
         print('ERROR: Output has to be a directory when input is a dir')
-        # upscale_directory(infile, outfile)
-
     upscale_directory(infile, outfile)
 elif os.path.isfile(infile):
-    print("\nIt is a normal file")
-
-# upscale_file(args.infile, args.outfile)
+    upscale_file(infile,outfile)
