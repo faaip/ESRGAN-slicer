@@ -23,7 +23,8 @@ class Root(Tk):
         self.labelFrameButton.grid(column=0, row=1, padx=20, pady=20)
 
         self.fileButton = self.openFileButton()
-        # self.dirButton = self.openDirButton()
+        self.dirButton = self.openDirButton()
+        self.outputButton = self.outputBotton()
 
         self.selectionLabel = ttk.Label(self.labelFrameButton, text="")
         self.selectionLabel.grid(column=1, row=3)
@@ -42,11 +43,17 @@ class Root(Tk):
         button.grid(column=1, row=2)
         return button
 
+    def outputBotton(self):
+        button = ttk.Button(self.labelFrameButton,
+                            text="Select output", state='disabled')
+        button.grid(column=1, row=4)
+        return button
+
     def goButton(self):
         button = ttk.Button(self.labelFrameButton,
                             text="Start upscaling!", command=self.runUpscaling,
                             state="disabled")
-        button.grid(column=1, row=4)
+        button.grid(column=1, row=5)
         return button
 
     def readyToUpscale(self, path):
@@ -58,10 +65,9 @@ class Root(Tk):
     def runUpscaling(self):
         upscale_file(self.imagePath)
 
-
     def fileDialog(self):
         path = filedialog.askopenfilename(initialdir="/home/fablab-ubuntu", title="Select A File",
-                                                   filetypes=(("JPEG", "*.jpg *.jpeg"), ("PNG", "*.png")))
+                                          filetypes=(("JPEG", "*.jpg *.jpeg"), ("PNG", "*.png")))
         self.readyToUpscale(path)
 
     def dirDialog(self):
@@ -72,4 +78,3 @@ class Root(Tk):
 
 root = Root()
 root.mainloop()
-
