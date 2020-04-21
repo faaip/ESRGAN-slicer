@@ -5,8 +5,8 @@ A tiny wrapper for [ESRGAN](https://github.com/xinntao/ESRGAN). ESRGAN has a lim
 - [x] CLI
 - [x] Take directories as input
 - [x] Can run with CPU only
+- [x] GUI
 - [ ] More progress (TQDM)
-- [ ] GUI
 - [ ] Distribute
 
 ### Installing and running the CLI:
@@ -16,6 +16,12 @@ pip3 install -r requirements.txt
 
 ```
 
+### Run GUI
+```
+python3 slicer_gui.py
+```
+
+### Run CLI
 Run the script as so:
 
 ```
