@@ -75,10 +75,11 @@ def isImage(file):
 
 def upscale_directory(input_dir, output_dir):
     print('Upscaling all files in', input_dir)
-    os.mkdir(output_dir) 
+    if not os.path.isdir(output_dir):
+        os.mkdir(output_dir) 
     for file in tqdm(list(filter(lambda x: isImage, os.listdir(input_dir)))):
         filename = os.fsdecode(file)
-        if filename.endswith(".png") or filename.endswith(".jpeg"):
+        if isImage(file):
             input_name = os.path.join(input_dir, filename)
             output_name = os.path.join(output_dir, filename)
             upscale_file(input_name, output_name)
