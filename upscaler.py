@@ -70,7 +70,7 @@ def upscale_file(file_path, output_path):
 
 
 def isImage(file):
-    return file.endswith(".png") or file.endswith(".jpeg")
+    return file.endswith(".png") or file.endswith(".jpeg") or file.endswith(".jpg")
 
 
 def upscale_directory(input_dir, output_dir):

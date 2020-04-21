@@ -2,13 +2,7 @@ import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog, messagebox
-from upscaler import upscale_file
-
-# try:
-#     from upscaler import file_is_valid
-# except AssertionError as e:
-#     messagebox.showinfo("Torch error", e)
-#     exit(0)
+from upscaler import upscale_file, upscale_directory
 
 
 class Root(Tk):
@@ -19,51 +13,72 @@ class Root(Tk):
         # self.wm_iconbitmap('icon.ico')
 
         # label frame for selection buttons
-        self.labelFrameButton = ttk.LabelFrame(self, text="Select image(s)")
-        self.labelFrameButton.grid(column=0, row=1, padx=20, pady=20)
+        self.inputFrame = ttk.LabelFrame(self, text="Select image(s):")
+        self.inputFrame.grid(column=0, row=1, padx=20, pady=20)
+
+        self.outputFrame = ttk.LabelFrame(self, text="Select output:")
+        self.outputFrame.grid(column=0, row=2, padx=20, pady=20)
 
         self.fileButton = self.openFileButton()
         self.dirButton = self.openDirButton()
         self.outputButton = self.outputBotton()
 
-        self.selectionLabel = ttk.Label(self.labelFrameButton, text="")
+        self.selectionLabel = ttk.Label(self.inputFrame, text="")
         self.selectionLabel.grid(column=1, row=3)
 
         self.goButton = self.goButton()
 
     def openFileButton(self):
-        button = ttk.Button(self.labelFrameButton,
+        button = ttk.Button(self.inputFrame,
                             text="Select an image", command=self.fileDialog)
         button.grid(column=1, row=1)
         return button
 
     def openDirButton(self):
-        button = ttk.Button(self.labelFrameButton,
+        button = ttk.Button(self.inputFrame,
                             text="Select directory", command=self.dirDialog)
         button.grid(column=1, row=2)
         return button
 
     def outputBotton(self):
-        button = ttk.Button(self.labelFrameButton,
-                            text="Select output", state='disabled')
+        button = ttk.Button(self.outputFrame,
+                            text="Select output", state='disabled',
+                            command=self.outputDialog)
         button.grid(column=1, row=4)
         return button
 
     def goButton(self):
-        button = ttk.Button(self.labelFrameButton,
+        button = ttk.Button(self.outputFrame,
                             text="Start upscaling!", command=self.runUpscaling,
                             state="disabled")
         button.grid(column=1, row=5)
         return button
 
     def readyToUpscale(self, path):
-        self.imagePath = path
-        self.selectionLabel.configure(text=os.path.basename(path))
+        self.input_path = path
+        self.selectionLabel.configure(text=os.path.basename(self.input_path))
         self.selectionLabel.grid(column=1, row=3)
-        self.goButton.config(state='normal')
+        self.outputButton.config(state='normal')
+
+    def outputDialog(self):
+        if os.path.isfile(self.input_path):
+            files = [('JPEG', '*.jpg'),
+                     ('PNG', '*.png')]
+            self.output_path = filedialog.asksaveasfilename(title='Save upscaled image as...', initialdir=os.path.dirname(self.input_path),
+                                                            filetypes=files, defaultextension=files)
+            self.goButton.config(state='normal')
+        elif os.path.isdir(self.input_path):
+            self.output_path = filedialog.askdirectory(title='Select output directory',initialdir=os.path.dirname(self.input_path))
+            if os.path.samefile(str(self.input_path), str(self.output_path)):
+                messagebox.showwarning("Warning", "Output directory cannot be the same as input")
+            else:
+                self.goButton.config(state='normal')
 
     def runUpscaling(self):
-        upscale_file(self.imagePath)
+        if os.path.isfile(self.input_path):
+            upscale_file(self.input_path, self.output_path)
+        elif os.path.isdir(self.input_path):
+            upscale_directory(self.input_path, self.output_path)
 
     def fileDialog(self):
         path = filedialog.askopenfilename(initialdir="/home/fablab-ubuntu", title="Select A File",
