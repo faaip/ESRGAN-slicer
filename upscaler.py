@@ -73,7 +73,8 @@ def upscale_file(file_path, output_path):
         out = slice(img)
         cv2.imwrite(output_path, out)
     else:
-        raise IOError('Input file is', os.fsdecode(file_path),', can only take PNG og JPEG') 
+        raise IOError('Input file is', os.fsdecode(
+            file_path), ', can only take PNG og JPEG')
 
 
 def isImage(file):
@@ -82,12 +83,23 @@ def isImage(file):
 
 def upscale_directory(input_dir, output_dir):
     print('Upscaling all files in directory')
-    for file in tqdm(list(filter(lambda x: isImage, os.listdir(infile)))):
+    for file in tqdm(list(filter(lambda x: isImage, os.listdir(input_dir)))):
         filename = os.fsdecode(file)
         if filename.endswith(".png") or filename.endswith(".jpeg"):
             input_name = os.path.join(input_dir, filename)
             output_name = os.path.join(output_dir, filename)
-            upscale_file(input_name,output_name)
+            upscale_file(input_name, output_name)
+
+
+def process_input_args():
+    args = parser.parse_args()
+    infile = args.infile
+    outfile = args.outfile
+    if os.path.isfile(infile):
+        print('input is image')
+        upscale_file(infile, outfile)
+    elif os.path.isdir(infile):
+        upscale_directory(infile, outfile)
 
 
 parser = argparse.ArgumentParser(description='Upscale input file')
@@ -98,16 +110,4 @@ parser.add_argument('-i', '--input', dest='infile',   required=True,
 parser.add_argument('-o', '--output', dest='outfile',  required=True,
                     metavar='OUTPUT_FILE', help='The upscaled image or output directory')
 
-# parse and assign to the variable
-args = parser.parse_args()
-infile = args.infile
-outfile = args.outfile
-
-if os.path.isdir(infile):
-    try:
-        os.path.file(outfile)
-    except AttributeError as e:
-        print('ERROR: Output has to be a directory when input is a dir')
-    upscale_directory(infile, outfile)
-elif os.path.isfile(infile):
-    upscale_file(infile,outfile)
+process_input_args()
