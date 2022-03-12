@@ -6,7 +6,7 @@ gdown==3.10.3
 idna==2.9
 numpy==1.18.3
 opencv-python==4.2.0.34
-Pillow==8.3.2
+Pillow==9.0.1
 pycodestyle==2.5.0
 PySocks==1.7.1
 requests==2.23.0
