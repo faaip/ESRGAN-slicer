@@ -4,7 +4,7 @@ chardet==3.0.4
 filelock==3.0.12
 gdown==3.10.3
 idna==2.9
-numpy==1.18.3
+numpy==1.22.0
 opencv-python==4.2.0.34
 Pillow==8.3.2
 pycodestyle==2.5.0
